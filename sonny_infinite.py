@@ -56,7 +56,6 @@ class MathEngine:
             return {"type": "maths", "text": f"{a} - {b} = ?", "ans": str(a-b), "hint": "Column subtraction."}
             
         elif q_type == 'mult':
-            # Mix of times tables and long multiplication
             if random.random() > 0.5:
                 a = random.randint(2, 12)
                 b = random.randint(2, 12)
@@ -66,7 +65,6 @@ class MathEngine:
             return {"type": "maths", "text": f"{a} x {b} = ?", "ans": str(a*b), "hint": "Partition or grid method."}
             
         elif q_type == 'div':
-            # Reverse multiplication to ensure whole numbers
             ans = random.randint(2, 12)
             b = random.randint(2, 12)
             a = ans * b
@@ -83,7 +81,6 @@ class MathEngine:
             return {"type": "maths", "text": f"{a} + {b} = ?", "ans": ans, "hint": "Line up the dots."}
         
         elif q_type == 'fraction':
-            # Simple fractions to decimals
             pairs = [("1/2", "0.5"), ("1/4", "0.25"), ("3/4", "0.75"), ("1/10", "0.1"), ("1/5", "0.2")]
             q, a = random.choice(pairs)
             return {"type": "maths", "text": f"{q} as a decimal?", "ans": a, "hint": "Common conversion."}
@@ -91,27 +88,61 @@ class MathEngine:
         return {"type": "maths", "text": "10 + 10", "ans": "20", "hint": "Easy one."}
 
 # ==========================================
-# 📚 STATIC CONTENT (Spelling/Reading)
+# 📚 FIXED CONTENT (Definitions + Mnemonics)
 # ==========================================
-# Expanded list - 50+ words
+# Now includes "def" (Definition) for the Question, and "hint" (Mnemonic) for the Yellow Box.
 SPELLING_BANK = [
-    ("accommodate", "Double C, Double M"), ("accompany", "Double C"), ("achieve", "i before e"),
-    ("aggressive", "Double G, Double S"), ("amateur", "Ends in -eur"), ("ancient", "ci sounds like sh"),
-    ("apparent", "Double P"), ("appreciate", "Double P"), ("attached", "Double T"),
-    ("available", "ai in the middle"), ("average", "v-e-r"), ("awkward", "w-k-w"),
-    ("bargain", "gain at the end"), ("bruise", "u before i"), ("category", "cat-E-gory"),
-    ("cemetery", "Three e's"), ("committee", "Double M, T, and E"), ("communicate", "Double M"),
-    ("community", "Double M"), ("competition", "pet in the middle"), ("conscience", "sci-ence"),
-    ("conscious", "sci-ous"), ("controversy", "ro-ver"), ("convenience", "veni-ence"),
-    ("correspond", "Double R"), ("criticise", "c-i-s-e"), ("curiosity", "os-ity"),
-    ("definite", "fini in the middle"), ("desperate", "rat in the middle"), ("determined", "term in the middle"),
-    ("develop", "No e at the end"), ("dictionary", "tion-ary"), ("disastrous", "No e in aster"),
-    ("embarrass", "Double R, Double S"), ("environment", "ron-ment"), ("equipment", "equip-ment"),
-    ("especially", "ci-ally"), ("exaggerate", "Double G"), ("excellent", "Double L"),
-    ("existence", "ten-ce"), ("explanation", "pla-nation"), ("familiar", "liar at the end"),
-    ("foreign", "re-ign"), ("forty", "No u"), ("frequently", "qu"),
-    ("government", "vern-ment"), ("guarantee", "u-a-r"), ("harass", "One R, Double S"),
-    ("hindrance", "drance"), ("identity", "tity"), ("immediate", "Double M")
+    {"word": "accommodate", "def": "To provide a room for someone", "hint": "Double C, Double M"},
+    {"word": "accompany", "def": "To go somewhere with someone", "hint": "Double C"},
+    {"word": "achieve", "def": "To reach a goal by effort", "hint": "i before e"},
+    {"word": "aggressive", "def": "Ready to attack or confront", "hint": "Double G, Double S"},
+    {"word": "amateur", "def": "A person who is not a professional", "hint": "Ends in -eur"},
+    {"word": "ancient", "def": "Very old", "hint": "ci sounds like sh"},
+    {"word": "apparent", "def": "Clearly visible or understood", "hint": "Double P"},
+    {"word": "appreciate", "def": "To be thankful for", "hint": "Double P"},
+    {"word": "attached", "def": "Joined to something", "hint": "Double T"},
+    {"word": "available", "def": "Ready to be used", "hint": "ai in the middle"},
+    {"word": "average", "def": "The typical amount", "hint": "a-v-e-r-a-g-e"},
+    {"word": "awkward", "def": "Hard to do or deal with", "hint": "w-k-w"},
+    {"word": "bargain", "def": "Something bought cheaply", "hint": "gain at the end"},
+    {"word": "bruise", "def": "A purple mark on skin", "hint": "u before i"},
+    {"word": "category", "def": "A class or group of things", "hint": "cat-E-gory"},
+    {"word": "cemetery", "def": "A place where people are buried", "hint": "Three e's"},
+    {"word": "committee", "def": "A group of people chosen to manage something", "hint": "Double M, T, and E"},
+    {"word": "communicate", "def": "To share information", "hint": "Double M"},
+    {"word": "community", "def": "A group of people living in one place", "hint": "Double M"},
+    {"word": "competition", "def": "The activity of striving to win", "hint": "pet in the middle"},
+    {"word": "conscience", "def": "Inner voice telling right from wrong", "hint": "sci-ence"},
+    {"word": "conscious", "def": "Aware of one's surroundings", "hint": "sci-ous"},
+    {"word": "controversy", "def": "Public disagreement", "hint": "ro-ver"},
+    {"word": "convenience", "def": "Being useful or easy", "hint": "veni-ence"},
+    {"word": "correspond", "def": "To write letters to someone", "hint": "Double R"},
+    {"word": "criticise", "def": "To indicate faults", "hint": "c-i-s-e"},
+    {"word": "curiosity", "def": "A strong desire to know something", "hint": "os-ity"},
+    {"word": "definite", "def": "Certain or clear", "hint": "fini in the middle"},
+    {"word": "desperate", "def": "Feeling hopeless", "hint": "rat in the middle"},
+    {"word": "determined", "def": "Having made a firm decision", "hint": "term in the middle"},
+    {"word": "develop", "def": "To grow or cause to grow", "hint": "No e at the end"},
+    {"word": "dictionary", "def": "A book of words", "hint": "tion-ary"},
+    {"word": "disastrous", "def": "Causing great damage", "hint": "No e in aster"},
+    {"word": "embarrass", "def": "To cause shame", "hint": "Double R, Double S"},
+    {"word": "environment", "def": "The surroundings where we live", "hint": "ron-ment"},
+    {"word": "equipment", "def": "Necessary items for a purpose", "hint": "equip-ment"},
+    {"word": "especially", "def": "Used to single out one thing", "hint": "ci-ally"},
+    {"word": "exaggerate", "def": "To make something seem larger/worse", "hint": "Double G"},
+    {"word": "excellent", "def": "Extremely good", "hint": "Double L"},
+    {"word": "existence", "def": "The fact of living", "hint": "ten-ce"},
+    {"word": "explanation", "def": "A statement making something clear", "hint": "pla-nation"},
+    {"word": "familiar", "def": "Well known", "hint": "liar at the end"},
+    {"word": "foreign", "def": "From another country", "hint": "re-ign"},
+    {"word": "forty", "def": "The number 40", "hint": "No u"},
+    {"word": "frequently", "def": "Happening often", "hint": "qu"},
+    {"word": "government", "def": "The group of people with authority", "hint": "vern-ment"},
+    {"word": "guarantee", "def": "A formal promise", "hint": "u-a-r"},
+    {"word": "harass", "def": "To pester someone", "hint": "One R, Double S"},
+    {"word": "hindrance", "def": "A thing that provides resistance", "hint": "drance"},
+    {"word": "identity", "def": "Who a person is", "hint": "tity"},
+    {"word": "immediate", "def": "Occurring at once", "hint": "Double M"}
 ]
 
 READING_BANK = [
@@ -186,9 +217,9 @@ def get_next_question():
         # Generate Infinite Maths
         return MathEngine.generate()
     elif roll < 0.8:
-        # Pick Random Spelling
-        word, hint = random.choice(SPELLING_BANK)
-        return {"type": "spell", "text": f"Spell the word for: '{hint}'", "ans": word, "hint": f"Starts with {word[0]}..."}
+        # Pick Random Spelling (Fixed Logic)
+        item = random.choice(SPELLING_BANK)
+        return {"type": "spell", "text": f"Spell the word meaning: '{item['def']}'", "ans": item['word'], "hint": f"Tip: {item['hint']}"}
     else:
         # Pick Random Reading
         q = random.choice(READING_BANK)
@@ -257,11 +288,16 @@ with tab_battle:
 
     # 2. LOGS
     st.divider()
+    # HINT LOGIC: Show hint if misses > 0
     if battle['misses'] > 0: st.warning(f"💡 HINT: {battle['q']['hint']}")
+    
+    # 3. HELP LOGIC: Show first letter if misses > 2
+    if battle['misses'] >= 3: st.error(f"🚑 HELP: Starts with '{str(battle['q']['ans'])[0].upper()}...'")
+
     if "CRITICAL" in battle['log']: st.success(battle['log'])
     elif "BLOCKED" in battle['log']: st.info(battle['log'])
 
-    # 3. COMBAT INPUT
+    # 4. COMBAT INPUT
     if battle['hp'] > 0:
         st.markdown(f"**QUESTION:** {battle['q']['text']}")
         
